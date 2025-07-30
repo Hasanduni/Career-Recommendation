@@ -52,7 +52,7 @@ languages = ['English', 'Sinhala', 'Tamil']
 
 internships = [
     "Software Intern", "Data Analyst Intern", "QA Intern", "Network Intern", 
-    "UI/UX Intern", "Cloud Intern", "Cybersecurity Intern", "BI Intern", "ML Intern"
+    "UI/UX Intern", "Cloud Intern", "Cybersecurity Intern", "BI Intern", "ML Intern","None"
 ]
 
 skills = [
