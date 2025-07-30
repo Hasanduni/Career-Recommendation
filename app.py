@@ -7,7 +7,6 @@ model_data = joblib.load('career_recommendation_model.pkl')
 preprocessor = model_data['preprocessor']
 rf_models_tuned = model_data['models']
 
-# Recommendation function
 def recommend_careers_tuned(input_data: dict):
     input_df = pd.DataFrame([input_data])
     input_processed = preprocessor.transform(input_df)
@@ -20,10 +19,7 @@ def recommend_careers_tuned(input_data: dict):
     ranked_roles = sorted(recommendations.items(), key=lambda x: x[1], reverse=True)
     return ranked_roles
 
-# Streamlit app
-st.title("🎓 Career Recommendation System")
-
-# Qualification dropdown
+# Options
 qualifications = [
     "Arts - Information Technology - University of Sri Jayewardenepura",
     "Computer Science - University of Colombo School of Computing (UCSC)",
@@ -52,36 +48,38 @@ qualifications = [
     "Information Communication Technology - Eastern University, Sri Lanka"
 ]
 
-qualification = st.selectbox("🎓 Select Your Qualification", qualifications)
+languages = ['English', 'Sinhala', 'Tamil']
 
-# Language proficiency multi-select
-languages = st.multiselect(
-    "🌐 Select Language Proficiency (You can select more than one)",
-    ['English', 'Sinhala', 'Tamil']
-)
-language_combined = ", ".join(languages)
+internships = [
+    "Software Intern", "Data Analyst Intern", "QA Intern", "Network Intern", 
+    "UI/UX Intern", "Cloud Intern", "Cybersecurity Intern", "BI Intern", "ML Intern"
+]
 
-# Internship status
-internship = st.selectbox("💼 Previous Internship Experience", ['None', 'Yes'])
+skills = [
+    "Python", "Java", "SQL", "JavaScript", "TensorFlow", "Pandas", "Docker", 
+    "Kubernetes", "HTML/CSS", "Power BI", "Spark", "AWS", "Azure", 
+    "Linux", "Tableau", "React", "Node.js"
+]
 
-# Skills multi-select
-skills = st.multiselect(
-    "🧠 Select Your Skills",
-    [
-        "Python", "Java", "SQL", "JavaScript", "TensorFlow", "Pandas", "Docker",
-        "Kubernetes", "HTML/CSS", "Power BI", "Spark", "AWS", "Azure",
-        "Linux", "Tableau", "React", "Node.js"
-    ]
-)
+# Streamlit UI
+st.title("Career Recommendation System 🎯")
 
-if st.button("🚀 Recommend Careers"):
+qualification = st.selectbox("Qualification", qualifications)
+language_proficiency = st.multiselect("Language Proficiency (Select one or more)", languages)
+previous_internships = st.multiselect("Previous Internships (Select one or more)", internships)
+selected_skills = st.multiselect("Select Your Skills", skills)
+
+if st.button("Recommend Careers"):
+    # Prepare input data
     input_data = {
         'Qualification': qualification,
-        'Language Proficiency': language_combined,
-        'Previous Internships': internship,
-        'Skills': ", ".join(skills)
+        'Language Proficiency': ", ".join(language_proficiency) if language_proficiency else "None",
+        'Previous Internships': ", ".join(previous_internships) if previous_internships else "None",
+        'Skills': ", ".join(selected_skills) if selected_skills else "None"
     }
+    
     results = recommend_careers_tuned(input_data)
+    
     st.subheader("🔝 Top 5 Recommended Careers:")
     for role, score in results[:5]:
-        st.write(f"**{role}** — Probability: {score:.2f}")
+        st.write(f"**{role}** - Probability: {score:.2f}")
