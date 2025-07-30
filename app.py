@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 
 # Load model
-model_data = joblib.load('career_recommendation_model.pkl')
+model_data = joblib.load('random_forest_models_tuned.pkl')
 preprocessor = model_data['preprocessor']
 rf_models_tuned = model_data['models']
 
