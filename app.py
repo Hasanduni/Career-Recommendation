@@ -81,5 +81,26 @@ if st.button("Recommend Careers"):
     results = recommend_careers_tuned(input_data)
     
     st.subheader("🔝 Top 5 Recommended Careers:")
-    for role, score in results[:5]:
-        st.write(f"**{role}** - Probability: {score:.2f}")
+
+    # Add custom CSS for styling
+    st.markdown("""
+        <style>
+        .career-option {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .career-option:hover {
+            background-color: #0056b3;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
+    for role, _ in results[:5]:
+        st.markdown(f"<div class='career-option'>{role}</div>", unsafe_allow_html=True)
