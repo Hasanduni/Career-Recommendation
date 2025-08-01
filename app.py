@@ -104,7 +104,7 @@ if st.button("Recommend Careers"):
     st.markdown("""
         <style>
         .career-option {
-            background-color: #007bff;
+            background-color: #01237d;
             color: white;
             padding: 10px;
             border-radius: 8px;
