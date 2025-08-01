@@ -64,10 +64,28 @@ skills = [
 # Streamlit UI
 st.title("Career Recommendation System 🎯")
 
+# Inject CSS to style multiselect tags
+st.markdown("""
+    <style>
+    /* Change multiselect chips background to dark blue */
+    div[data-baseweb="tag"] {
+        background-color: #0056b3 !important;
+        color: white !important;
+        font-weight: bold;
+        border-radius: 8px;
+    }
+    /* Hover effect for chips */
+    div[data-baseweb="tag"]:hover {
+        background-color: #003f7f !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 qualification = st.selectbox("Qualification", qualifications)
 language_proficiency = st.multiselect("Language Proficiency (Select one or more)", languages)
 previous_internships = st.multiselect("Previous Internships (Select one or more)", internships)
 selected_skills = st.multiselect("Select Your Skills", skills)
+
 
 if st.button("Recommend Careers"):
     # Prepare input data
